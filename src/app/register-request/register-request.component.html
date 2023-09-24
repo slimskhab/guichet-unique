@@ -1,0 +1,473 @@
+<div style="display: flex; height: 100%;width: 100%;">
+
+    <app-sidebar></app-sidebar>
+
+
+
+    <div class="column-container">
+        <app-topbar></app-topbar>
+        <p-breadcrumb class="max-w-full" [model]="items" [home]="home"></p-breadcrumb>
+
+
+
+
+
+        <form [formGroup]="requestForm">
+            <div class="circular-div">
+                <h2 class="title">Fiche requête</h2>
+                <div style="padding: 0px 20px 0px 20px;justify-content: space-around;width: 100%;">
+                    <div
+                        style="display: flex; justify-content: space-between;width: 100%; max-height: 100%; padding-top: 10px;">
+                        <div
+                            style="display: flex;flex-direction: column;justify-content: space-between; width: 100%; max-height: 100%;">
+
+                            <div style="display: flex;flex-direction: row;">
+
+                                <span class="p-float-label" style="margin-top: 20px;margin-right: 21px;">
+
+                                    <input type="text" pInputText formControlName="requestNumber" />
+                                    <label htmlFor="username">N° requête</label>
+                                </span>
+                                <div style="display: flex;flex-direction: column;">
+                                    <label for="date1" style="color: #495057;">Date de la requête</label>
+                                    <p-calendar class="element custom-calendar" formControlName="dateOfRequest"
+                                        [showIcon]="true"></p-calendar>
+                                </div>
+                            </div>
+                            <p-divider align="left">
+                                <div class="inline-flex align-items-center">
+                                    <i class="pi pi-user mr-2"></i>
+                                    <b> Demandeur</b>
+                                </div>
+                            </p-divider>
+                            <br>
+
+                            <div class="cp5"
+                                style="flex-flow: row wrap;box-sizing: border-box;display: flex;place-content: center flex-start;flex: 1 1 100%;max-height: 100%;">
+                                <div style="flex: 1 1 15%; box-sizing: border-box; max-width: 15%;">
+                                    <span class="p-float-label">
+                                        <input type="text" pInputText formControlName="nni"
+                                            (blur)="showValidationMessage('nni')" style="width: 100%;" />
+                                        <label>NNI <span style="color: red;">*</span></label>
+                                    </span>
+                                    <br
+                                        *ngIf="!(showErrorMessage('nni') && requestForm.get('nni')?.hasError('required'))">
+                                    <small style="color: red; margin-bottom: 5px;"
+                                        *ngIf="showErrorMessage('nni') && requestForm.get('nni')?.hasError('required')">Champ
+                                        Obligatoire</small>
+                                </div>
+                                <div style="flex: 1 1 10%; box-sizing: border-box; max-width: 10%;">
+                                    <p-dropdown formControlName="sexe" [options]="sexes" [(ngModel)]="sexe"
+                                        [placeholder]="'Civilité'" (onChange)="onDropdownChangeSexe($event.value)"
+                                        optionLabel="libelleFr" ></p-dropdown>
+                                </div>
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <span class="p-float-label">
+                                        <input type="text" pInputText formControlName="lastName" style="width: 100%;" />
+                                        <label htmlFor="username">Nom <span style="color: red;">*</span></label>
+                                    </span>
+                                    <br
+                                        *ngIf="!(showErrorMessage('lastName') && requestForm.get('lastName')?.hasError('required'))">
+                                    <small style="color: red; margin-bottom: 5px;"
+                                        *ngIf="showErrorMessage('lastName') && requestForm.get('lastName')?.hasError('required')">Champ
+                                        Obligatoire</small>
+                                </div>
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <span class="p-float-label">
+                                        <input type="text" pInputText formControlName="name" style="width: 100%;" />
+                                        <label htmlFor="username">Prénom <span style="color: red;">*</span></label>
+                                    </span>
+                                    <br
+                                        *ngIf="!(showErrorMessage('name') && requestForm.get('name')?.hasError('required'))">
+                                    <small style="color: red; margin-bottom: 5px;"
+                                        *ngIf="showErrorMessage('name') && requestForm.get('name')?.hasError('required')">Champ
+                                        Obligatoire</small>
+                                </div>
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <p-dropdown formControlName="type" class="form-dropdown" [options]="types"
+                                        [(ngModel)]="type" styleClass="full-width"
+                                        (onChange)="onDropdownChangeType($event.value)"
+                                        optionLabel="libelleFr"></p-dropdown>
+
+                                </div>
+                            </div>
+                            <div class="cp5"
+                                style="flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: center flex-start;flex: 1 1 100%; max-height: 100%;"
+                                *ngIf="showExtraFields">
+                                <div style="flex: 1 1 10%; box-sizing: border-box; max-width: 10%;">
+                                    <span class="p-float-label">
+                                        <input type="text" pInputText formControlName="nniResp" style="width: 100%;" />
+                                        <label htmlFor="username">NNI Responsable</label>
+                                    </span>
+                                </div>
+                                <div style="flex: 1 1 15%; box-sizing: border-box; max-width: 25%;">
+                                    <span class="p-float-label">
+                                        <input type="text" pInputText formControlName="rc" style="width: 100%;" />
+                                        <label htmlFor="username">Registre Commerce</label>
+                                    </span>
+                                </div>
+
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <span class="p-float-label">
+                                        <input type="text" pInputText formControlName="nomResp" style="width: 100%;" />
+                                        <label htmlFor="username">Nom Responsable</label>
+                                    </span>
+                                </div>
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <span class="p-float-label">
+                                        <input type="text" pInputText formControlName="prenomResp"
+                                            style="width: 100%;" />
+                                        <label htmlFor="username">Prénom Responsable</label>
+                                    </span>
+                                    <br>
+                                </div>
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <span class="p-float-label">
+                                        <input type="text" pInputText formControlName="denomination"
+                                            style="width: 100%;" />
+                                        <label htmlFor="username">Dénomination</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="cp5"
+                                style="flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: center flex-start; flex: 1 1 100%; max-height: 100%;">
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <p-dropdown [placeholder]="'Wilaya'" [options]="wilayet" formControlName="wilaya"
+                                        [(ngModel)]="wilaya" optionLabel="libelleFr" [filter]="true" filterBy="name"
+                                        (onChange)="onDropdownChangeWilaya($event.value)"></p-dropdown>
+                                </div>
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <p-dropdown [placeholder]="'Moughataa'" formControlName="moughataa"
+                                        [options]="moughataat" [(ngModel)]="moughataa" optionLabel="libelleFr"
+                                        (onChange)="onDropdownChangeMoughataa($event.value)"></p-dropdown>
+                                </div>
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <p-dropdown [placeholder]="'Commune'" formControlName="commune" [options]="communes"
+                                        [(ngModel)]="commune" optionLabel="libelleFr"></p-dropdown>
+                                </div>
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <span class="p-float-label">
+                                        <input type="text" pInputText formControlName="adresse" style="width: 100%;" />
+                                        <label htmlFor="username">Adresse</label>
+                                    </span>
+                                    <br>
+                                </div>
+
+
+
+
+
+
+
+                            </div>
+                            <div class="cp5"
+                                style="flex-flow: row wrap; box-sizing: border-box; display: flex; place-content: center flex-start; flex: 1 1 100%; max-height: 100%;">
+                                <div style="flex: 1 1 50%; box-sizing: border-box; max-width: 50%;">
+
+                                    <span class="p-float-label">
+
+                                        <input type="text" pInputText formControlName="adresseOfContact"
+                                            style="width: 100%;" />
+                                        <label htmlFor="username">Adresse de contact</label>
+                                    </span>
+                                </div>
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <span class="p-float-label">
+                                        <input type="text" pInputText formControlName="phoneNumber"
+                                            style="width: 100%;" />
+                                        <label htmlFor="username">N° Téléphone</label>
+                                    </span>
+                                </div>
+                                <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                                    <span class="p-float-label">
+                                        <input type="text" pInputText formControlName="email" style="width: 100%;" />
+                                        <label htmlFor="username">E-mail</label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <p-divider align="left">
+                                <div class="inline-flex align-items-center">
+                                    <i class="pi pi-file-edit"></i>
+                                    <b> Détail de la requête</b>
+                                </div>
+                            </p-divider>
+
+                            <div style="width: 100%">
+                                <br>
+                                <span class="p-float-label">
+
+                                    <input pInputText formControlName="object" style="width: 100%;" />
+                                    <label htmlFor="username">Objet <span style="color: red;">*</span></label>
+                                </span>
+                                <div style="padding-bottom: 15px;">
+                                    <br
+                                        *ngIf="!(showErrorMessage('object') && requestForm.get('object')?.hasError('required'))">
+
+                                    <small style="color: red; margin-bottom: 10px;"
+                                        *ngIf="showErrorMessage('object') && requestForm.get('object')?.hasError('required')">Champ
+                                        Obligatoiree</small>
+                                </div>
+                                <div class="card"
+                                    style="border: 1px solid #ced4da !important;padding: 10px;border-color: black;border-width: 2px;border-radius: 5px;">
+                                    <label htmlFor="username" style="color: #62676b;">Description<span
+                                            style="color: red;">*</span></label>
+
+                                    <p-editor formControlName="description" [style]="{ height: '320px' }"></p-editor>
+                                    <small style="color: red; margin-bottom: 10px;"
+                                        *ngIf="showErrorMessage('description') && requestForm.get('description')?.hasError('required')">Champ
+                                        Obligatoiree</small>
+                                </div>
+
+
+                                <br
+                                    *ngIf="!(showErrorMessage('description') && requestForm.get('description')?.hasError('required'))">
+                                <small style="color: red; margin-bottom: 5px;"
+                                    *ngIf="showErrorMessage('description') && requestForm.get('description')?.hasError('required')">Champ
+                                    Obligatoire</small>
+                                <div class="cp5"
+                                    style="flex-flow: row wrap;box-sizing: border-box;display: flex;place-content: center flex-start;flex: 1 1 100%;max-height: 100%;">
+                                    <div style="flex: 1 1 70%; box-sizing: border-box; max-width: 70%;">
+                                        <p-multiSelect [options]="services" formControlName="selectedServices"
+                                            [ngModel]="selectedServices" defaultLabel="Service public concerné"
+                                            optionLabel="desServFr" [maxSelectedLabels]="2"
+                                            selectedItemsLabel="{0} items selected"
+                                            [style]="{ 'width': '100%' }"></p-multiSelect>
+
+                                    </div>
+                                    <div style="flex: 1 1 30%; box-sizing: border-box; max-width: 30%;">
+                                        <p-calendar formControlName="dateOfProblem" [showIcon]="true"
+                                            [placeholder]="'Date d apparition du problème *'">Date de la
+                                            requete</p-calendar>
+                                    </div>
+                                </div>
+                                <br>
+                                <span class="p-float-label">
+                                    <textarea id="float-input" rows="5" cols="30" pInputTextarea style="width: 100%;"
+                                        formControlName="actionsEntreprises"></textarea>
+                                    <label for="float-input">Actions Entreprises</label>
+                                </span>
+
+
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="circular-div">
+                    <div style="display: flex;align-items: center;">
+
+                        <h2 class="title" style="display: flex;align-items: center;justify-content: space-between;">Document 
+                            <div
+                                style="align-items: center;">
+                                <span class="ml-auto">
+                                    <i class="pi pi-plus-circle clickable-icon"
+                                        style="font-size: 1.5rem; margin-right: 24px;" (click)="openAddDialog()"></i>
+                                    <i class="pi pi-file-export clickable-icon"
+                                        style="font-size: 1.5rem; margin-right: 25px;"></i>
+                                </span>
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" [(ngModel)]="filterValue" (input)="applyFilter()"
+                                        placeholder="Filtrer parmi ces éléments ..." />
+                                </span>
+                            </div>
+                        </h2>
+
+                    </div>
+
+                    <div class="card">
+
+                        <p-table [value]="filteredRequests || requests" [paginator]="true" [rows]="5"
+                            [rowsPerPageOptions]="[10,100,200,400,800]">
+
+
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Type</th>
+                                    <th>Entitled</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-request>
+                                <tr>
+                                    <td>{{ request.id }}</td>
+                                    <td>{{ request.type }}</td>
+                                    <td>{{ request.entitled }}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+
+                    </div>
+                </div>
+<div style="justify-content: end;display: flex; padding: 20px;">
+                <button style="background-color: #00a95c;width: min-content;" pButton pRipple
+                    icon="pi pi-save" label="Enregistrer" [disabled]="requestForm.invalid" class="p-button-success"
+                    (click)="saveRequest()"></button></div>
+            </div>
+
+        </form>
+    </div>
+
+
+
+</div>
+
+
+<p-dialog header="Header" [(visible)]="showCinPopUp" [closable]="true" [style]="{ width: '55vw',height: '100vh' }" [style.height.%]="100">
+    <ng-template pTemplate="header">
+        <h2>Requerant Details:</h2>
+    </ng-template>
+    <br>
+    <p-dropdown [options]="requerants" [placeholder]="'Requerants'"
+    [(ngModel)]="requerant" optionLabel="fullName" (onChange)="onDropDownChangeRequerant()"></p-dropdown>
+    <div class="dialog-container"
+        style="display: flex;justify-content: start;width: 100%;flex-direction: column;">
+
+        <div *ngIf="requerant">
+            <p *ngIf="requerant.cin != null && requerant.cin !== ''">CIN: {{ requerant.cin }},</p>
+            <p *ngIf="requerant.nom != null && requerant.nom !== ''">Nom: {{ requerant.nom }},</p>
+            <p *ngIf="requerant.prenom != null && requerant.prenom !== ''">Prenom: {{ requerant.prenom }}</p>
+            <p *ngIf="requerant.idCivReq != null && requerant.idCivReq !== ''">CivReq: {{ sexe.libelleFr }},</p>
+            <p *ngIf="requerant.adresseContact != null && requerant.adresseContact !== ''">AdresseContact: {{
+                requerant.adresseContact }},</p>
+            <p *ngIf="requerant.nomResp != null && requerant.nomResp !== ''">NomResp: {{ requerant.nomResp }},</p>
+            <p *ngIf="requerant.idTypeReq != null && requerant.idTypeReq !== ''">TypeReq: {{ type.libelleFr }},</p>
+            <p *ngIf="requerant.prenomsResp != null && requerant.prenomsResp !== ''">PrenomsResp: {{
+                requerant.prenomsResp }},</p>
+            <p *ngIf="requerant.emailContact != null && requerant.emailContact !== ''">EmailContact: {{
+                requerant.emailContact }},</p>
+            <p *ngIf="requerant.denomination != null && requerant.denomination !== ''">Denomination: {{
+                requerant.denomination }},</p>
+            <p *ngIf="requerant.rc != null && requerant.rc !== ''">RC: {{ requerant.rc }},</p>
+            <p *ngIf="requerant.cinResp != null && requerant.cinResp !== ''">CINResp: {{ requerant.cinResp }},</p>
+            <p *ngIf="requerant.idDecoupGeo != null && requerant.idDecoupGeo !== ''">Wilaya: {{
+                wilaya.libelleFr }},</p>
+                <p *ngIf="requerant.idDecoupGeo != null && requerant.idDecoupGeo !== ''">Moughataa: {{
+                    moughataa.libelleFr }},</p>
+                    <p *ngIf="requerant.idDecoupGeo != null && requerant.idDecoupGeo !== ''">Commune: {{
+                        commune.libelleFr }},</p>
+            <p *ngIf="requerant.adresse != null && requerant.adresse !== ''">Adresse: {{ requerant.adresse }},</p>
+            <p *ngIf="requerant.id != null && requerant.id !== ''">ID: {{ requerant.id }},</p>
+
+
+
+        </div>
+
+        
+        <br>
+        
+    </div>
+
+
+    <ng-template pTemplate="footer">
+        <div class="button-container" style="width: 100%;" *ngIf="showButtons">
+            <p-button icon="pi pi-save" type="submit" label="Match" styleClass="p-button-success" (click)="matchRequerant()"></p-button>
+            <p-button icon="pi pi-user-edit" (click)="editUser()" label="Edit user"
+                styleClass="p-button-warning"></p-button>
+            <p-button icon="pi pi-times" (click)="noMatch()" label="No Match"
+                styleClass="p-button-danger"></p-button>
+        </div>
+
+
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Header" [(visible)]="isAddVisible" [style]="{ width: '80vw',height:'80vh' }">
+    <ng-template pTemplate="header">
+        <span class="text-xl font-bold" style="font-size: 20px;font-weight: 700;">Ajouter document</span>
+
+    </ng-template>
+    <br>
+    <div class="cp5" style="flex-flow: row wrap;box-sizing: border-box;display: flex;place-content: center flex-start;flex: 1 1 100%;max-height: 100%;">
+
+        <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+            <span class="p-float-label">
+                <input type="text" pInputText formControlName="numero"
+                    (blur)="showValidationMessage('nni')" style="width: 100%;" />
+                <label>N° <span style="color: red;">*</span></label>
+            </span>
+            <br
+                *ngIf="!(showErrorMessage('numero') && requestForm.get('numero')?.hasError('required'))">
+            <small style="color: red; margin-bottom: 5px;"
+                *ngIf="showErrorMessage('numero') && requestForm.get('numero')?.hasError('required')">Champ
+                Obligatoire</small>
+        </div>
+        <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+            
+            <p-dropdown formControlName="docType" [options]="docTypes" [(ngModel)]="docType"
+                                        [placeholder]="'Type'"
+                                        optionLabel="libelleFr"></p-dropdown>
+            <small style="color: red; margin-bottom: 5px;"
+                *ngIf="showErrorMessage('docType') && requestForm.get('docType')?.hasError('required')">Champ
+                Obligatoire</small>
+        </div>
+        <div style="flex: 1 1 50%; box-sizing: border-box; max-width: 50%;">
+            <span class="p-float-label">
+                <input type="text" pInputText formControlName="intilted"
+                    (blur)="showValidationMessage('intilted')" style="width: 100%;" />
+                <label>Intitulé <span style="color: red;">*</span></label>
+            </span>
+           
+            <small style="color: red; margin-bottom: 5px;"
+                *ngIf="showErrorMessage('intilted') && requestForm.get('intilted')?.hasError('required')">Champ
+                Obligatoire</small>
+        </div>
+
+    </div>
+    <div>
+        <span class="p-float-label">
+            <textarea id="float-input" rows="5" cols="30" pInputTextarea style="width: 100%;"></textarea>
+            <label for="float-input">Summary</label>
+        </span>
+    </div>
+
+
+    <div class="circular-div">
+        <div class="green-container">
+            <h2>Pièces jointes</h2>
+            <div style="align-items: center;display:flex ;">
+                <span class="ml-auto">
+                    <i class="pi pi-plus-circle clickable-icon" style="font-size: 1.5rem; margin-right: 23px;"
+                        (click)="openAddDialog()"></i>
+                </span>
+            
+            </div>
+        </div>
+        <div class="card">
+            <p-table [value]="filteredRequests || requests" [paginator]="true" [rows]="10"
+                [rowsPerPageOptions]="[10,100,200,400,800]">
+
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 90%;">Nom fichier</th>
+                        <th>Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-request>
+                    <tr>
+                        <td>{{ request.type }}</td>
+                        <td><i class="pi pi-download clickable-icon" style="color: green;"></i><i
+                                class="pi pi-times clickable-icon" style="color: red;"></i></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-save" (click)="addRequest()" label="Enregistrer" styleClass="p-button-success"></p-button>
+        <p-button icon="pi pi-times" (click)="isAddVisible = false" label="Annuler"
+            styleClass="p-button-danger"></p-button>
+
+
+    </ng-template>
+</p-dialog>

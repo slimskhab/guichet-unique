@@ -1,0 +1,235 @@
+
+  .p-inputtext:hover,
+.p-inputtextarea:hover,
+.p-autocomplete:hover,
+.p-checkbox:hover,
+.p-chips:hover,
+.p-dropdown-trigger:hover,
+.p-inputnumber:hover,
+.p-listbox:hover,
+.p-multiselect:hover,
+.p-password:hover,
+.p-radiobutton:hover,
+.p-slider:hover,
+.p-togglebutton:hover,
+.p-calendar:hover,
+.p-colorpicker:hover,
+.p-fileupload:hover,
+.p-inputswitch:hover,
+.p-rating:hover,
+.p-spinner:hover,
+.p-selectbutton:hover,
+.p-textarea:hover,
+.p-editor:hover,
+.p-typography:hover {
+  border-color: black;
+  border-width: 2px;
+  border-radius: 5px;
+  margin: -1px;
+}
+.card {
+  transition: border-color 0.3s, border-width 0.3s, border-radius 0.3s, margin 0.3s;
+}
+
+.card:hover {
+  border-width: 10px;
+  border: 2px solid black !important;
+}
+
+.p-inputtext,
+.p-inputtextarea,
+.p-autocomplete,
+.p-checkbox,
+.p-chips,
+.p-dropdown-trigger,
+.p-inputnumber,
+.p-listbox,
+.p-multiselect,
+.p-password,
+.p-radiobutton,
+.p-slider,
+.p-togglebutton,
+.p-calendar,
+.p-colorpicker,
+.p-fileupload,
+.p-inputswitch,
+.p-rating:hover,
+.p-spinner,
+.p-selectbutton,
+.p-textarea,
+.p-editor,
+.p-typography {
+  border-radius: 5px;
+}
+  
+  .cp5 {
+    padding: -5px !important;
+  }
+  
+  .cp5>* {
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+  }
+  
+  .img-sidebar {
+    background-color: #727272;
+    font-weight: 700;
+  }
+  
+  .mainframe {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+  
+ 
+  
+  
+  
+  .vertical {
+    color: #000;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  ::ng-deep .form-dropdown {
+    font-weight: 600;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .button-container p-button:not(:last-child) {
+    margin-right: 10px; /* Adjust the margin value as per your preference */
+  }
+  
+  .error label {
+    color: red;
+  }
+  
+  .error input {
+    border-color: red;
+  }
+  
+  
+  .clickable-icon {
+    cursor: pointer;
+  }
+  
+  
+  .element-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  
+  
+  
+  .transparent-dropdown .p-dropdown-trigger {
+    background-color: transparent !important;
+  }
+  
+  .column-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+  .circular-div {
+    border-radius: 15px;
+    background: white;
+    width: 99%;
+    height: 100%;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  .element {
+    margin-right: 10px;
+  }
+  
+  .title {
+    background-color: #0b693a;
+    /* Adjust the background color of the title */
+    color: #fff;
+    text-align: left;
+    margin-bottom: auto;
+    padding: 10px;
+    padding-left: 30px;
+    font-size: 18px;
+    width: 100%;
+    position: relative;
+    top: -14px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    left: 0;
+    right: 0;
+  
+  }
+  
+  
+
+  
+  
+  
+  .input-field {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .bigger-flex {
+    flex: 2;
+  }
+  
+  .cp5 {
+    padding: -5px !important;
+  }
+  
+  .cp5>* {
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+  }
+  
+
+  :host ::ng-deep .p-dropdown {
+    width: 100%;
+    border: 1px solid #ced4da !important;
+    border-radius: 5px;
+  
+  }
+  
+  :host ::ng-deep .p-dropdown:hover {
+    width: 100%;
+    border: 2px solid black !important;
+    margin: -1px;
+  
+  }
+  
+  :host ::ng-deep .p-calendar {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  :host ::ng-deep .p-calendar:hover {
+    border: 2px solid black !important;
+    border-radius: 5px;
+    margin: -2px;
+  }
+  
+  :host ::ng-deep .p-multiselect:hover {
+    border: 2px solid green !important;
+    border-radius: 5px;
+    margin: -2px;
+  }

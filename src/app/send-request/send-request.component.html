@@ -1,0 +1,262 @@
+
+<div style="display: flex; height: 100%;width: 100%;">
+
+    <app-sidebar></app-sidebar>
+
+
+
+    <div class="column-container">
+        <app-topbar></app-topbar>
+        <p-breadcrumb class="max-w-full" [model]="items" [home]="home"></p-breadcrumb>
+        <div class="circular-div">
+            <h2 class="title">Informations générales</h2>
+
+            <p-table styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 35%;">N° requête</th>
+                        <td>{{ request?.numReq || "" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date requête</th>
+                        <td>{{request?.dtRequete | date: 'dd/MM/yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <th>Etat Requête</th>
+                        <td>{{ request?.etatReq }}</td>
+                    </tr>
+                    <tr>
+                        <th>Objet</th>
+                        <td>{{ request?.objet }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td [innerHTML]="request?.desc"></td>
+                    </tr>
+                    <tr>
+                        <th>Service publique concerné</th>
+                        <td>{{ request?.servicesText || '-' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date d'apparition du problème</th>
+                        <td>{{request?.datAppPb | date: 'dd/MM/yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <th>Actions entreprises</th>
+                        <td>{{ request?.actionsEnt || '-' }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+
+
+        <div class="circular-div">
+            <h2 class="title">Informations Courrier</h2>
+            <br>
+            <form [formGroup]="formGroup" style="padding: 0px 10px 0px 10px;">
+                <div class="cp5"
+                    style="flex-flow: row wrap;box-sizing: border-box;display: flex;place-content: center flex-start;flex: 1 1 100%;max-height: 100%;">
+                    <div style="flex: 1 1 20%; box-sizing: border-box; max-width: 20%;">
+                        <p-dropdown (onChange)="onDropDownChange($event.value)" [(ngModel)]="selectedOption"
+                            formControlName="modeEnvoi" placeholder="Mode d'envoi" [options]="modeEnvoi"></p-dropdown>
+                    </div>
+                    <div style="flex: 1 1 20%; box-sizing: border-box; max-width: 20%;">
+                        <p-calendar class="element custom-calendar" formControlName="limitDate" [showIcon]="true"
+                            placeholder="Date Limite"></p-calendar>
+                    </div>
+                    <div style="flex: 1 1 60%; box-sizing: border-box; max-width: 60%;">
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="objet"
+                                (blur)="showValidationMessage('objet')" style="width: 100%;" />
+                            <label>Objet <span style="color: red;">*</span></label>
+                        </span>
+                        <br *ngIf="!(showErrorMessage('objet') && formGroup.get('objet')?.hasError('required'))">
+                        <small style="color: red; margin-bottom: 5px;"
+                            *ngIf="showErrorMessage('objet') && formGroup.get('objet')?.hasError('required')">Champ
+                            Obligatoire</small>
+                    </div>
+
+                </div>
+                <div class="card" style="border: 1px solid #ced4da !important;padding: 10px;border-color: black;border-width: 2px;border-radius: 5px;">
+                    <label htmlFor="username" style="color: #495057;">Contenu<span style="color: red;">*</span></label>
+                    <p-editor formControlName="description" [style]="{ height: '320px' }"
+                        (blur)="showValidationMessage('description')"></p-editor>
+                    <small style="color: red; margin-bottom: 10px;"
+                        *ngIf="showErrorMessage('description') && formGroup.get('description')?.hasError('required')">Champ
+                        Obligatoiree</small>
+                </div>
+
+            </form>
+
+            <div class="circular-div" *ngIf="showContacts">
+                <h2 class="title" style="display: flex; justify-content: space-between;align-items: center;">Liste des
+                    Contacts
+                    <div style="display: flex;justify-content: end;align-items: center;">
+                        <span class="ml-auto">
+                            <i class="pi pi-plus-circle clickable-icon" style="font-size: 1.5rem; margin-right: 24px;"
+                                (click)="openAddDialog()"></i>
+                            <i class="pi pi-file-export clickable-icon" style="font-size: 1.5rem; margin-right: 25px;"
+                                (click)="exportButton()"></i>
+                        </span>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="filterValue" (input)="applyFilter()"
+                                placeholder="Filtrer parmi ces éléments ..." />
+                        </span>
+                    </div>
+                </h2>
+                <div class="card" style="padding: 10px;">
+                    <p-table [value]="filteredContacts || contacts" [(selection)]="selectedContacts" dataKey="idResp"
+                        [tableStyle]="{'min-width': '50rem'}">
+                        <ng-template pTemplate="header">
+                            <tr>
+
+                                <th style="width: 50%; padding: 0px 5px;">Organisme en charge</th>
+                                <th style="width: 12%; padding: 0px 5px;">Nom</th>
+                                <th style="width: 12%; padding: 0px 5px;">Prénom</th>
+                                <th style="width: 30%; padding: 0px 5px;">Email</th>
+                                <th style="width: 3%; padding: 0px 5px;">
+                                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-contact>
+                            <tr>
+
+                                <td>{{contact.organsime}}</td>
+                                <td>{{contact.nomResp}}</td>
+                                <td>{{contact.prenomResp}}</td>
+                                <td>{{contact.emailResp}}</td>
+                                <td style=" padding: 0px 5px;">
+                                    <p-tableCheckbox [value]="contact"></p-tableCheckbox>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+            </div>
+            <div class="circular-div" *ngIf="showDocuments">
+                <h2 class="title">Documents</h2>
+
+                <p-table [value]="documents" [paginator]="true" [rows]="5"
+                [rowsPerPageOptions]="[10,100,200,400,800]">
+
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Entitled</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-document>
+                    <tr>
+                        <td>{{ document.id }}</td>
+                        <td>{{ document.type }}</td>
+                        <td>{{ document.entitled }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            </div>
+            <div style="display: flex;justify-content: end; padding: 10px;">
+                <button pButton pRipple icon="pi pi-save" *ngIf="!showDocuments" label="Enregistrer" class="p-button-success"
+                    [disabled]="disableButton()" (click)="updateRequest()"></button>
+                    <button *ngIf="showDocuments" [disabled]="disableButton()" pButton pRipple icon="pi pi-bars" label="Imprimer courrier" 
+                 style="margin-left: 10px;background-color: #0a4d6c;" (click)="exportPdf()"></button>
+                <button pButton pRipple icon="pi pi-arrow-left" label="Retour" class="p-button-danger"
+                    (click)="returnToPage()" style="margin-left: 10px;"></button>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+<p-dialog header="Header" [(visible)]="showAddContactPopUp" [style]="{ width: '55vw' }" [style.height.%]="100">
+    <ng-template pTemplate="header">
+        <h2 class="title">Ajout contact</h2>
+
+    </ng-template>
+    <form [formGroup]="addContactForm">
+        <div class="cp5"
+            style="flex-flow: row wrap;box-sizing: border-box;padding-top: 17px;display: flex;place-content: center flex-start;flex: 1 1 100%;max-height: 100%;">
+
+            <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                <span class="p-float-label">
+                    <input type="text" pInputText formControlName="nom" (blur)="showValidationMessage2('nom')"
+                        style="width: 100%;" />
+                    <label>Nom <span style="color: red;">*</span></label>
+                </span>
+                <br *ngIf="!(showErrorMessage2('nom') && addContactForm.get('nom')?.hasError('required'))">
+                <small style="color: red; margin-bottom: 5px;"
+                    *ngIf="showErrorMessage2('nom') && addContactForm.get('nom')?.hasError('required')">Champ
+                    Obligatoire</small>
+            </div>
+            <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                <span class="p-float-label">
+                    <input type="text" pInputText formControlName="prenom" (blur)="showValidationMessage2('prenom')"
+                        style="width: 100%;" />
+                    <label>Prénom <span style="color: red;">*</span></label>
+                </span>
+                <br *ngIf="!(showErrorMessage2('prenom') && addContactForm.get('prenom')?.hasError('required'))">
+                <small style="color: red; margin-bottom: 5px;"
+                    *ngIf="showErrorMessage2('prenom') && addContactForm.get('prenom')?.hasError('required')">Champ
+                    Obligatoire</small>
+            </div>
+            <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                <span class="p-float-label">
+                    <input type="text" pInputText formControlName="email" (blur)="showValidationMessage2('email')"
+                        style="width: 100%;" />
+                    <label>Email <span style="color: red;">*</span></label>
+                </span>
+                <br *ngIf="!(showErrorMessage2('email') && addContactForm.get('email')?.hasError('required'))">
+                <small style="color: red; margin-bottom: 5px;"
+                    *ngIf="showErrorMessage2('email') && addContactForm.get('email')?.hasError('required')">Champ
+                    Obligatoire</small>
+            </div>
+            <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                <span class="p-float-label">
+                    <input type="text" pInputText formControlName="adresse" (blur)="showValidationMessage2('adresse')"
+                        style="width: 100%;" />
+                    <label>Adresse <span style="color: red;">*</span></label>
+                </span>
+                <br *ngIf="!(showErrorMessage2('adresse') && addContactForm.get('adresse')?.hasError('required'))">
+                <small style="color: red; margin-bottom: 5px;"
+                    *ngIf="showErrorMessage2('adresse') && addContactForm.get('adresse')?.hasError('required')">Champ
+                    Obligatoire</small>
+            </div>
+        </div>
+        <div class="cp5"
+            style="flex-flow: row wrap;box-sizing: border-box;display: flex;place-content: center flex-start;flex: 1 1 100%;max-height: 100%;">
+
+            <div style="flex: 1 1 25%; box-sizing: border-box; max-width: 25%;">
+                <span class="p-float-label">
+                    <input type="text" pInputText formControlName="phoneNumber"
+                        (blur)="showValidationMessage2('phoneNumber')" style="width: 100%;" />
+                    <label>Téléphone <span style="color: red;">*</span></label>
+                </span>
+                <br
+                    *ngIf="!(showErrorMessage2('phoneNumber') && addContactForm.get('phoneNumber')?.hasError('required'))">
+                <small style="color: red; margin-bottom: 5px;"
+                    *ngIf="showErrorMessage2('phoneNumber') && addContactForm.get('phoneNumber')?.hasError('required')">Champ
+                    Obligatoire</small>
+            </div>
+
+        </div>
+        <div style="display: flex;justify-content: end; padding: 10px;">
+            <button pButton pRipple icon="pi pi-save" label="Enregistrer" class="p-button-success"
+                [disabled]="addContactForm.invalid" (click)="addContact()"></button>
+                
+            <button pButton pRipple icon="pi pi-arrow-left" label="Retour" class="p-button-danger"
+                (click)="showAddContactPopUp=false" style="margin-left: 10px;"></button>
+        </div>
+    </form>
+
+</p-dialog>

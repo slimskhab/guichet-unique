@@ -1,0 +1,187 @@
+<div style="display: flex; height: 100%;width: 100%;">
+
+    <app-sidebar></app-sidebar>
+
+
+
+    <div class="column-container">
+        <app-topbar></app-topbar>
+        <p-breadcrumb class="max-w-full" [model]="items" [home]="home"></p-breadcrumb>
+        <div class="circular-div">
+            <h2 class="title">Informations générales</h2>
+
+            <p-table styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 35%;">N° requête</th>
+                        <td>{{ request?.numReq || "" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date requête</th>
+                        <td>{{request?.dtRequete | date: 'dd/MM/yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <th>Etat Requête</th>
+                        <td>{{ request?.etatReq }}</td>
+                    </tr>
+                    <tr>
+                        <th>Objet</th>
+                        <td>{{ request?.objet }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td [innerHTML]="request?.desc"></td>
+                    </tr>
+                    <tr>
+                        <th>Service publique concerné</th>
+                        <td>{{ request?.servicesText || '-' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date d'apparition du problème</th>
+                        <td>{{request?.datAppPb | date: 'dd/MM/yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <th>Actions entreprises</th>
+                        <td>{{ request?.actionsEnt || '-' }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+
+
+        <div class="circular-div">
+            <h2 class="title">Informations Demandeur</h2>
+            <p-table styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 35%;">NNI</th>
+                        <td>{{ requerant?.cin }}</td>
+                    </tr>
+                    <tr>
+                        <th>Personne</th>
+                        <td>{{ requerant?.cinResp ? 'Morale' : 'Physique' }}</td>
+
+                    </tr>
+                    <tr>
+                        <th>Demandeur</th>
+                        <td>{{ requerant?.nom }} {{ requerant?.prenom }}</td>
+                    </tr>
+
+
+
+                    <tr *ngIf="requerant?.cinResp">
+                        <th>NNI responsable </th>
+                        <td>{{ requerant?.cinResp }}</td>
+                    </tr>
+                    <tr *ngIf="requerant?.rc">
+                        <th>Registre de commerce</th>
+                        <td>{{ requerant?.rc }}</td>
+                    </tr>
+                    <tr *ngIf="requerant?.nomResp">
+                        <th>Nom et prénom du responsable</th>
+                        <td>{{ requerant?.nomResp }} {{ requerant?.prenomResp }}</td>
+                    </tr>
+                    <tr *ngIf="requerant?.denomination">
+                        <th>Dénomination</th>
+                        <td>{{ requerant?.denomination }}</td>
+                    </tr>
+
+
+
+
+
+                    <tr>
+                        <th>Adresse</th>
+                        <td>{{ requerant?.adresse || '-' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adresse de contact</th>
+                        <td>{{ requerant?.adresseContact || '-' }}</td>
+                    </tr>
+                    <tr>
+                        <th>N° téléphone</th>
+                        <td>{{ requerant?.telContact || '-' }}</td>
+                    </tr>
+                    <tr>
+                        <th>E-mail</th>
+                        <td>{{ requerant?.emailContact || '-' }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+
+        <div class="circular-div">
+            <h2 class="title">Documents</h2>
+        </div>
+
+        <div class="circular-div">
+            <h2 class="title">Avis et qualification</h2>
+
+
+
+            <form [formGroup]="formGroup">
+                <div class="cp5"
+                    style="flex-flow: row wrap;box-sizing: border-box;display: flex;place-content: center flex-start;flex: 1 1 100%;max-height: 100%;">
+                    <div style="flex: 1 1 32%; box-sizing: border-box; max-width: 32%;">
+                        <p-dropdown (onChange)="onDropDownChangeAccept($event.value)"  [(ngModel)]="selectedOption" formControlName="acceptRefuse"
+                            placeholder="Choisir un élement" [options]="acceptRefuse"></p-dropdown>
+                    </div>
+                    <div *ngIf="showOptions" style="flex: 1 1 32%; box-sizing: border-box; max-width: 32%;">
+                        <p-dropdown formControlName="type"  [(ngModel)]="typeReq" placeholder="Type requete" [options]="types"
+                            optionLabel="desTypePbFr"></p-dropdown>
+                    </div>
+                    <div *ngIf="showOptions" style="flex: 1 1 32%; box-sizing: border-box; max-width: 32%;">
+                        <p-dropdown formControlName="urgence" [(ngModel)]="nivUrgReq" placeholder="Niveau d'urgence" [options]="urgences"
+                            optionLabel="desNivUrgReqFr">
+                        </p-dropdown>
+
+
+
+                    </div>
+                </div>
+                <br>
+                <div *ngIf="showOptions" class="cp5"
+                    style="flex-flow: row wrap;box-sizing: border-box;display: flex;place-content: center flex-start;flex: 1 1 100%;max-height: 100%;">
+                    <div style="flex: 1 1 48%; box-sizing: border-box; max-width: 48%;">
+                        <p-multiSelect [(ngModel)]="selectedServices" [options]="services"
+                            formControlName="selectedServices"
+                            defaultLabel="Service public concerné"
+                            optionLabel="desServFr" optionValue="id" [maxSelectedLabels]="2"
+                            selectedItemsLabel="{0} items selected" [style]="{ 'width': '100%' }"></p-multiSelect>
+
+
+                    </div>
+                    <div style="flex: 1 1 48%; box-sizing: border-box; max-width: 48%;">
+                        <p-multiSelect [options]="organismes" formControlName="selectedOrganismes"
+                            defaultLabel="Service/Organisme" optionLabel="desOrgFr" [maxSelectedLabels]="2"
+                            selectedItemsLabel="{0} items selected" [style]="{ 'width': '100%' }"></p-multiSelect>
+                    </div>
+                </div>
+                <div class="cp5" *ngIf="showMotif"
+                    style="flex-flow: row wrap;box-sizing: border-box;display: flex;place-content: center flex-start;flex: 1 1 100%;max-height: 100%;">
+
+                    <div style="flex: 1 1 100%; box-sizing: border-box; max-width: 100%;">
+                        <span class="p-float-label">
+                            <textarea id="float-input" rows="5" cols="30" pInputTextarea
+                                style="width: 100%;" formControlName="rejectionReason"></textarea>
+                            <label for="float-input">Motif de Rejet</label>
+                        </span>
+                    </div>
+                </div>
+
+            </form>
+
+            <div style="display: flex;justify-content: end; padding: 10px;">
+                <button pButton pRipple icon="pi pi-save" label="Enregistrer" (click)="updateRequest()" class="p-button-success" [disabled]="disabledButton()"></button>
+                <button pButton pRipple icon="pi pi-times" label="Annuler" class="p-button-danger"
+                    style="margin-left: 10px;"></button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>

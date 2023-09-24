@@ -1,0 +1,63 @@
+    <div class="full-screen-wrapper">
+        <div class="container">
+
+            <div class="image-container">
+                <img src="../../assets/images/loginPage.png" alt="Image">
+            </div>
+        
+            <div class="content">
+        
+                <div class="minister">
+                    <img src="https://i.postimg.cc/qMGBvFDJ/logo-mr.png" alt="Image">
+                    <p-divider layout="vertical"></p-divider>
+                    <span class="header-text">MINISTÈRE DE LA TRANSFORMATION NUMÉRIQUE, DE L'INNOVATION ET DE LA MODERNISATION
+                        DE L'ADMINISTRATION
+                        (MTNIMA)</span>
+                </div>
+                <br>
+                <span class="wrapper-text"> Connectez-vous </span>
+        
+                <br>
+                <br>
+                <div class="mt-4">
+        
+                    <span class="p-float-label">
+        
+                        <input pInputText id="username" [(ngModel)]="username" />
+                        <i class="pi pi-user" style="color: black"></i>
+                        <label htmlFor="username">Nom d'utilisateur <span
+                                style="color: red;">*</span></label>
+                    </span>
+                </div>
+        
+        
+                <br>
+                <div class="mt-4">
+        
+                    <span class="p-float-label">
+                        <input pInputText type="{{showPassword?'text':'password'}}" id="password" [(ngModel)]="password" />
+                        <i class="pi pi-lock" style="color: black"></i>
+                        <i class="pi pi-eye-slash" [ngClass]="{ 'pi-eye': showPassword, 'pi-eye-slash': !showPassword }" style="color: black" (click)="togglePasswordVisibility()"></i>
+                        <label htmlFor="password">Mot de passe <span style="color: red;">*</span></label>
+                    </span>
+                    
+                      
+                </div>
+        
+                <br>
+                <div>
+                    <button (click)="login()" pButton pRipple class="p-button-success">
+                        <div *ngIf="!showProgressIndicator">Connexion</div><i *ngIf="showProgressIndicator"
+                            class="pi pi-spin pi-spinner" style="font-size: 1.5rem"></i>
+                    </button>
+        
+                </div>
+                <a href="#" (click)="changeLanguage()" class="bottom-right-link">Arabe</a>
+        
+            </div>
+        
+        </div>
+    
+    
+    </div>
+    

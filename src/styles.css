@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "primeng/resources/themes/saga-green/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+
+@font-face {
+    font-family: 'Averta';
+    src: url('../src/assets/fonts/AvertaStd-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Averta';
+    src: url('../src/assets/fonts/AvertaStd-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  body {
+    background-color: #fafafa;
+    font-family: 'Averta', sans-serif;
+  }
+
+  

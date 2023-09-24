@@ -1,0 +1,122 @@
+<div style="display: flex; height: 100%;width: 100%;">
+
+    <app-sidebar></app-sidebar>
+
+
+
+    <div class="column-container">
+        <app-topbar></app-topbar>
+        <p-breadcrumb class="max-w-full" [model]="items" [home]="home"></p-breadcrumb>
+
+
+
+        <div class="circular-div">
+            <h2 class="title">Liste des requêtes</h2>
+            <div style="padding: 20px;justify-content: space-around;width: 100%;">
+
+                <p-table #dt1 [value]="filteredRequests || requests" dataKey="id" [rows]="10"
+                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]"
+                    styleClass="p-datatable-gridlines" [paginator]="true"
+                    currentPageReportTemplate="Affichage de la  {first} à la {last} entrées sur {totalRecords}"
+                    [globalFilterFields]="['numReq', 'dtRequete', 'objet', 'idRequerant', 'datAppPb']">
+                    <ng-template pTemplate="caption">
+                        <div class="flex" style="display: flex;justify-content: space-between;">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                (click)="clear(dt1)"></button>
+                            <div>
+                                <i class="pi pi-file-export" style="cursor: pointer;padding-right: 20px;"
+                                    (click)="exportPdf()"></i>
+                                <span class="p-input-icon-left ml-auto">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" [(ngModel)]="filterValue" (input)="applyFilter()"
+                                        placeholder="Filtrer parmi ces élèments ..." />
+
+                                </span>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 11%; padding: 0px 5px;">
+                                <div class="flex align-items-center">
+                                    N° requête
+                                    <p-columnFilter type="text" field="numReq" display="menu"></p-columnFilter>
+                                </div>
+                            </th>
+                            <th style="width: 12%; padding: 0px 5px;">
+                                <div class="flex align-items-center">
+                                    Date requête
+                                    <p-columnFilter type="date" field="dtRequete" display="menu"></p-columnFilter>
+                                </div>
+                            </th>
+                            <th style="min-width:15rem">
+                                <div class="flex align-items-center" style="display: flex;justify-content: center;">
+                                    Objet
+                                    <p-columnFilter type="text" field="objet" display="menu"></p-columnFilter>
+                                </div>
+                            </th>
+                            <th style="width: 11%; padding: 0px 5px;">
+                                <div class="flex align-items-center">
+                                    Demandeur
+                                    <p-columnFilter type="text" field="idRequerant" display="menu"></p-columnFilter>
+
+                                </div>
+                            </th>
+                            <th style="width: 13%; padding: 0px 5px;">
+                                <div class="flex align-items-center">
+                                    Date apparition
+                                    <p-columnFilter type="date" field="datAppPb" display="menu"></p-columnFilter>
+                                </div>
+                            </th>
+
+                            <th style="width: 7%; padding: 0px 5px;">
+
+                            </th>
+
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-request>
+                        <tr>
+                            <td>
+                                {{ request.numReq }}
+                            </td>
+                            <td>
+                                {{ request.dtRequete | date: 'dd/MM/yyyy' }}
+                            </td>
+                            <td>
+                                {{ request.objet }}
+                            </td>
+                            <td>
+                                {{ request.demandeur }}
+                            </td>
+                            <td>
+                                {{ request.datAppPb | date: 'dd/MM/yyyy' }}
+                            </td>
+                            <td>
+                                <a [routerLink]="['/app/req/lr/d', request.id_req]"
+                                    style="color: rgb(22, 129, 179);margin-right: 10px;"><i class="pi pi-info-circle"
+                                        style="cursor: pointer;"></i></a>
+
+                                <a [routerLink]="['/app/req/m', request.id_req]"
+                                    *ngIf="getRequestState(request.idEtatReq)" style="color: rgb(22, 129, 179);"><i
+                                        class="pi pi-pencil" style="cursor: pointer;"></i></a>
+
+                            </td>
+
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="7">La liste est actuellement vide</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>

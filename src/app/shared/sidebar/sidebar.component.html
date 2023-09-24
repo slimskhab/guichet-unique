@@ -1,0 +1,8 @@
+<i (click)="toggleSidebar()" class="pi pi-align-justify drawer-button" style="font-size: 1.5rem; cursor: pointer;"></i>
+<div [ngClass]="{'sidebar': !isSidebarVisible, 'isSidebarVisible': isSidebarVisible}">
+  <div class="img-sidebar">
+    <img src="https://i.postimg.cc/qMGBvFDJ/logo-mr.png" alt="Image">
+    <span style="color: white;">Guichet Unique du Citoyen</span>
+  </div>
+  <p-panelMenu [model]="menuItems"></p-panelMenu>
+</div>

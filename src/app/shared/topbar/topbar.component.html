@@ -1,0 +1,40 @@
+<div>
+    <div
+        class="maincontainer">
+        <div class="tips">
+            <img src="../../../assets/images/flag.png" alt="Image" style="height: 60px; padding-left: 20px;padding-right: 10px;">
+            <div style="display: flex;flex-direction: column;">
+                <span style="font-size: 15px;font-weight: 600;">République Islamique de Mauritanie
+                </span>
+                <span style="font-size: 15px;font-weight: 600;">Honneur - fraternité - justice
+
+                </span>
+                <span style="font-size: 12px;font-weight: 600;">Ministère de la Transformation Numérique, de
+                    l'Innovation et
+                    de
+                    la Modernisation de l'Administration (MTNIMA)
+                </span>
+
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: flex-end;">
+
+            <p-dropdown [options]="languages" [(ngModel)]="selectedLanguage" optionLabel="name"
+                [style]="{ 'background-color': 'transparent','border-color': 'transparent'}"></p-dropdown>
+
+            <p-dropdown [options]="options" class="custom-dropdown"
+                [style]="{ 'background-color': 'transparent','border-color': 'transparent'}" (onChange)="onDropdownChange($event.value)">
+                <ng-template let-option pTemplate="selectedItem">
+                    <img src="https://cdn-icons-png.flaticon.com/512/666/666201.png" alt="Image"
+                        style="width: 30px; height: 30px;">
+                </ng-template>
+
+                <ng-template let-option pTemplate="item" style="background-color: red;">
+                    <button style="background-color: transparent; border-color: transparent;">
+                        <div [innerHTML]="option.label"></div>
+                    </button>
+                </ng-template>
+            </p-dropdown>
+        </div>
+    </div>
+</div>

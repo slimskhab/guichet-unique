@@ -1,0 +1,150 @@
+@media (max-width: 1280px) {
+  .image-container {
+    display: none;
+  }
+  .container {
+    font-size: 14px; /* Adjusted font size for screens up to 1280px */
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .container {
+    font-size: 12px; /* Adjusted font size for screens up to 768px */
+  }
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%; /* Adjust the width as needed */
+    height: 75%; /* Adjust the height as needed */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: white;
+  }
+  .wrapper-text{
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 4vh;
+    color: #3f6a7f;
+    border-bottom: solid 4px #d01c1f;
+    font-size: 1.45vw;
+  }
+
+
+  .full-screen-wrapper {
+    background-image: url('../../assets/images/light-bg.png');
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+
+
+  .p-float-label {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .p-float-label input {
+    padding-left: 2.5rem; /* Adjust the padding as needed */
+  }
+  
+  .p-float-label i {
+    position: absolute;
+    top: 50%;
+    left: 0.75rem; /* Adjust the positioning as needed */
+    transform: translateY(-50%);
+  }
+  
+  .p-float-label label {
+    margin-left: 2rem; /* Adjust the margin as needed */
+  }
+  
+  .p-float-label .pi-eye-slash {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem; /* Adjust the positioning as needed */
+    transform: translate(95%,-50%);
+}
+
+.p-float-label .pi-eye {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem; /* Adjust the positioning as needed */
+    transform: translate(95%,-50%);
+}
+  
+
+  .image-container {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  
+
+.minister {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+height: 20vh;
+}
+
+.header-text{
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 6vh;
+    color: #0a4d6c;
+}
+
+.bottom-right-link {
+    position: absolute;
+    bottom: 10px; /* Adjust the distance from the bottom */
+    right: 10px; /* Adjust the distance from the right */
+    color: black; /* Set the desired text color */
+  text-decoration: none;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bottom-right-link:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }
+
+.card{
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper-text{
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 4vh;
+    color: #3f6a7f;
+    border-bottom: solid 4px #d01c1f;
+}
+
+.progressCirle{
+    height: 50;
+    width: 50;
+}
